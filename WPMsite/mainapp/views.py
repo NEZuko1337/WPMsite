@@ -1,16 +1,18 @@
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
+from . import wordlist
+
 
 
 def home(request):
-    return HttpResponse("<h1>Домашняя страница</h1>")
+    return render(request, 'mainapp/home.html')
 
 
 def check_word(request):
     input_word = request.GET.get('word')
-    expected_words = ["Привет", "Пока", "Спасибо"]  # Список ожидаемых слов
+    exp_words = wordlist.expected_words  # Список ожидаемых слов
 
-    if input_word in expected_words:
+    if input_word in exp_words:
         response_data = {'message': 'Слово введено правильно.'}
     else:
         response_data = {'message': 'Введено неправильное слово.'}
@@ -19,5 +21,5 @@ def check_word(request):
 
 
 def words_page(request):
-    return render(request, 'mainapp/word.html')
+    return render(request, 'mainapp/word.html', {'words': wordlist.expected_words})
 

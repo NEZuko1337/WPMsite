@@ -1,28 +1,45 @@
-<form>
-  <input type="text" id="inputField" placeholder="Введите слово" onkeyup="checkWord()">
-  <p id="message"></p>
-</form>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-function checkWord() {
-  var inputWord = $('#inputField').val();
-  $.ajax({
-    url: '/check_word/',
-    method: 'GET',
-    data: {'word': inputWord},
-    success: function(response) {
-      $('#message').text(response.message);
-      if (response.message === 'Слово введено правильно.') {
-         $('#message').css('color', 'green');
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Скорость печати</title>
+  </head>
+  <body>
+    <h4>Вводи эти слова и проверяй свою скорость печати</h4>
+    <form>
+      <input
+        type="text"
+        id="inputField"
+        placeholder="Введите слово"
+        onkeyup="checkWord()"
+      />
+      <p id="message"></p>
+    </form>
+    {{words}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function checkWord() {
+        var inputWord = $("#inputField").val();
+        $.ajax({
+          url: "/check_word/",
+          method: "GET",
+          data: { word: inputWord },
+          success: function (response) {
+            $("#message").text(response.message);
+            if (response.message === "Слово введено правильно.") {
+              $("#message").css("color", "green");
+            } else {
+              $("#message").css("color", "red");
+            }
+          },
+          error: function () {
+            $("#message").text("Произошла ошибка при проверке слова.");
+            $("#message").css("color", "red");
+          },
+        });
       }
-      else {
-        $('#message').css('color', 'red');
-      }
-    },
-    error: function() {
-      $('#message').text('Произошла ошибка при проверке слова.');
-      $('#message').css('color', 'red');
-    }
-  });
-}
-</script>
+    </script>
+  </body>
+</html>
