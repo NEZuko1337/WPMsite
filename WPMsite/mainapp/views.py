@@ -11,7 +11,8 @@ def home(request):
 def check_word(request):
     input_word = request.GET.get('word')
     exp_words = wordlist.expected_words  # Список ожидаемых слов
-
+    
+    # Добавить нормальную обработку слов
     if input_word in exp_words:
         response_data = {'message': 'Слово введено правильно.'}
     else:
